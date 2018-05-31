@@ -1,0 +1,34 @@
+#dslc-header.dslc-header-pos-fixed {
+  z-index: 500 !important;
+}
+.showcase-module{
+  padding: 10px; 
+  min-height:200px;
+}
+.react-datepicker-wrapper{
+  width: 100%;
+}
+.react-datepicker__input-container{
+  width: 100%;
+}
+.rc-dp-input{
+  width: 100%;
+}
+.ui.large.fluid.search .ui.icon.input{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*
+Fix modal position bug
+https://github.com/Semantic-Org/Semantic-UI-React/issues/2558
+*/
+.ui.page.modals.transition.visible {
+  display: flex !important;
+}
+.ui.scrolling.modal.transition.visible.active{
+  margin-top: 0 !important;
+}
+.rc-slider-mark-text{
+  font-size: x-small;
+}
