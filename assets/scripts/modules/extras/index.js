@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-const AdminMenuStyle = function(){
+export default function AdminMenuStyle(){
   var target_menu_items = '';
   target_menu_items += '#adminmenu a[href="edit.php?post_type=exp_partner"],';
   target_menu_items += '#adminmenu a[href="edit.php?post_type=exp_place"],';
@@ -13,8 +13,4 @@ const AdminMenuStyle = function(){
   target_menu_items += '#menu-appearance a[href="themes.php?page=experiensa-settings"]';  
 
   jQuery( target_menu_items ).append(' <attr title="Experiensa" class="dslc-menu-label">EXP</attr>');
-}
-
-module.exports = {
-  AdminMenuStyle
 }

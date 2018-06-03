@@ -13,7 +13,7 @@ const formatCountryResponse = function(response){
   });
   return countries;
 }
-const Autocomplete = function(){
+export default function Autocomplete(){
   var restcountries =  "https://maps.googleapis.com/maps/api/place/autocomplete/json";
   $('#newexp_country').autocomplete({
     source: function( request, response ) {
@@ -27,12 +27,10 @@ const Autocomplete = function(){
           action: 'requestCountryName'
         },
         success: function( data ) {
-          // console.log('respuesta',data)
           var countries = [];
           if(data.status == 'OK'){
             countries = formatCountryResponse(data.predictions);
           }
-          // console.log('paises',countries);
           response( countries );
         },
         error: function (xhr, status){
@@ -51,7 +49,4 @@ const Autocomplete = function(){
       return false;
     }
   })
-}
-module.exports = {
-  Autocomplete: Autocomplete
 }
