@@ -119,3 +119,21 @@ piklist('field', array(
         'button' => 'Add Photos'
     )
 ));
+
+piklist('field', array(
+    'type'          => 'file',
+    'field'         => 'exp_voyage_flyer',
+    'help'          => __( 'Flyer should be PDF files','experiensa'),
+    'label'         => __( 'Flyer File','experiensa' ),
+    'columns'       => 3,
+    'options'       => ['button' => __('PDF Flyer','experiensa')],
+    'validate' => array(
+        array(
+            'type' => 'limit',
+            'options' => array(
+                'min' => 0,
+                'max' => 1
+            )
+        )
+    )
+));
