@@ -39,6 +39,7 @@ class Voyage
                 $row['content'] = $info['content']['rendered'];
                 $row['excerpt'] = $info['excerpt']['rendered'];
                 $row['cover_image'] = $info['cover_image'];
+                $row['flyer_file'] = (isset($info['flyer_file'])?$info['flyer_file']:'');
                 $row['currency'] = $info['currency'];
                 $row['price'] = $info['price'];
                 $row['offer_dates'] = $info['offer_dates'];

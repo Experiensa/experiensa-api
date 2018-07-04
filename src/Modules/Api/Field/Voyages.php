@@ -11,6 +11,7 @@ class Voyages{
     public function registerFields(){
         add_action( 'rest_api_init', array($this,'register_voyage_price' ));
         add_action( 'rest_api_init', array($this,'register_voyage_cover_image' ));
+        add_action( 'rest_api_init', array($this,'register_voyage_flyer' ));
         add_action( 'rest_api_init', array($this,'register_voyage_currency' ));
         add_action( 'rest_api_init', array($this,'register_voyage_website' ));
         add_action( 'rest_api_init', array($this,'register_voyage_website_name' ));
@@ -40,6 +41,15 @@ class Voyages{
         register_rest_field( $this->cpt, 'cover_image',
             array(
                 'get_callback'    => array($this,'get_voyage_cover_image'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+    }
+    public function register_voyage_flyer(){
+        register_rest_field( $this->cpt, 'flyer_file',
+            array(
+                'get_callback'    => array($this,'get_voyage_flyer'),
                 'update_callback' => null,
                 'schema'          => null,
             )
@@ -205,6 +215,10 @@ class Voyages{
             $images['gallery'] = $gallery;
         }
         return $images;
+    }
+    public function get_voyage_flyer( $object, $field_name, $request ){
+        $custom = get_post_meta($object['id'], 'exp_voyage_flyer');
+        return !empty($custom)?wp_get_attachment_url($custom[0]):'';
     }
     public function get_voyage_currency( $object, $field_name, $request ) {
         $agency_options = get_option('agency_settings');
