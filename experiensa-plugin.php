@@ -38,13 +38,7 @@ function init_experiensa(){
     new Experiensa\Plugin\Modules\Api\RegisterApi();
 }
 add_action('init','init_experiensa');
-/*
-function init_livecomposer_modules(){
-    // TODO: this include need to be like this because LIVEComposer modules are external 
-    require_once EXPERIENSA_ABS . '/src/Modules/Extensions/LiveComposer/live-composer-loader.php';
-}
-add_action('plugins_loaded', 'init_livecomposer_modules');
-*/
+
 function experiensa_rewrite_flush(){
     require_once EXPERIENSA_ABS . '/autoloader.php';
     Experiensa\Plugin\Models\Register::register_flush_rewrite_rules();
