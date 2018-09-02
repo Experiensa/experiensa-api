@@ -64,7 +64,7 @@ class Voyage
         if(!empty($voyages)){
             for($i = 0; $i < count($voyages); $i++){
                 $voyages[$i]['index'] = $i;
-                $voyages[$i]['show'] = false;
+                $voyages[$i]['show'] = true;
             }
         }
         return $voyages;
