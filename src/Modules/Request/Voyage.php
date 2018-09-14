@@ -49,6 +49,7 @@ class Voyage
                 $row['theme'] = (isset($info['theme'])?$info['theme']:'');
                 $row['included'] = (isset($info['included'])?$info['included']:'');
                 $row['excluded'] = (isset($info['excluded'])?$info['excluded']:'');
+                $row['region'] = (isset($info['region'])?$info['region']:'');
                 $row['category'] = $info['category'];
                 $row['included'] = $info['included'];
                 $row['api_link'] = $info['link'];

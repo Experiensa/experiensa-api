@@ -24,10 +24,11 @@ class Voyages{
         add_action( 'rest_api_init', array($this,'register_voyage_categories' ));
         add_action( 'rest_api_init', array($this,'register_voyage_included' ));
         add_action( 'rest_api_init', array($this,'register_voyage_excluded' ));
+        add_action( 'rest_api_init', array($this,'register_voyage_region' ));
     }
-    //////////////////////////
+    ////////////////////////////
     //  FIELD REGISTER SECTION
-    //////////////////////////
+    ////////////////////////////
     public function register_voyage_price(){
         register_rest_field( $this->cpt, 'price',
             array(
@@ -158,6 +159,15 @@ class Voyages{
         register_rest_field( $this->cpt, 'excluded',
             array(
                 'get_callback'    => array($this,'get_voyage_excluded'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+    }
+    public function register_voyage_region() {
+        register_rest_field( $this->cpt, 'region',
+            array(
+                'get_callback'    => array($this,'get_voyage_region'),
                 'update_callback' => null,
                 'schema'          => null,
             )
@@ -333,4 +343,7 @@ class Voyages{
     public function get_voyage_excluded( $object, $field_name, $request ) {
         return $this->createTermsObject($object[ 'id' ],'exp_excluded');
     }
+    public function get_voyage_region( $object, $field_name, $request ) {
+        return $this->createTermsObject($object[ 'id' ],'exp_region');
+    }    
 }
