@@ -68,6 +68,10 @@ class Catalog {
             'methods'         => \WP_REST_Server::READABLE,
             'callback'        => array( $this, 'response_category_filter' ),
         ));
+        register_rest_route($this->namespace, '/' . $this->name. '/regions', array(
+            'methods'         => \WP_REST_Server::READABLE,
+            'callback'        => array( $this, 'response_region_filter' ),
+        ));
     }
     public function set_catalog() {
         $catalog = CatalogRequest::getCatalog();
@@ -134,6 +138,7 @@ class Catalog {
             $data['included_filter'] = $this->createFilterObject('included');
             $data['excluded_filter'] = $this->createFilterObject('excluded');
             $data['category_filter'] = $this->createFilterObject('category');
+            $data['region_filter'] = $this->createFilterObject('region');
         }
         return new \WP_REST_Response( $data, 200 );
     }
@@ -159,6 +164,10 @@ class Catalog {
     }
     public function response_category_filter($request){
         $data = $this->createFilterObject('category',true);
+        return new \WP_REST_Response( $data, 200 );
+    }
+    public function response_region_filter($request){
+        $data = $this->createFilterObject('region',true);
         return new \WP_REST_Response( $data, 200 );
     }
     /**
