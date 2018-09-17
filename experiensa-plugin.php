@@ -45,5 +45,10 @@ function experiensa_rewrite_flush(){
 }
 register_activation_hook(EXPERIENSA_FILE, 'experiensa_rewrite_flush');
 
-
-
+add_filter( 'json_url', function( $url ) {
+    if ( force_ssl_admin() ){
+        return set_url_scheme( $url, 'https' );
+    } else {
+        return $url;
+    }
+} );
