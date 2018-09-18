@@ -266,17 +266,20 @@ class Voyages{
         return $itinerary;
     }
     public function get_voyage_duration( $object, $field_name, $request ) {
-        $duration = "";
-        $days            = get_post_meta($object[ 'id' ],'exp_voyage_number_days');
-        $nights          = get_post_meta($object[ 'id' ],'exp_voyage_number_nights');
+        $duration = [
+            'days'      => false,
+            'nights'    => false
+        ];
+        $days = get_post_meta($object[ 'id' ],'exp_voyage_number_days');
+        $nights = get_post_meta($object[ 'id' ],'exp_voyage_number_nights');
         if(!empty($days[0])){
-            $duration.= implode($days) .' '.__('Days', 'experiensa');
+            $duration['days'] = implode($days);
             if(!empty($nights[0])){
-                $duration.= ' / ' . implode($nights) . ' ' . __('Nights', 'experiensa');
+                $duration['nights'] = implode($nights);
             }
         }else{
             if(!empty($nights[0])){
-                $duration.= implode($nights) . ' ' . __('Nights', 'experiensa');
+                $duration['nights'] = implode($nights);
             }
         }
         return $duration;
