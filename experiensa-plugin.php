@@ -44,6 +44,11 @@ function experiensa_rewrite_flush(){
     Experiensa\Plugin\Models\Register::register_flush_rewrite_rules();
 }
 register_activation_hook(EXPERIENSA_FILE, 'experiensa_rewrite_flush');
-
-
-
+//https://github.com/WP-API/WP-API/issues/259
+add_filter( 'json_url', function( $url ) {
+    if ( force_ssl_admin() ){
+        return set_url_scheme( $url, 'https' );
+    } else {
+        return $url;
+    }
+} );
