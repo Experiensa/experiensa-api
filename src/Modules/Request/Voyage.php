@@ -6,7 +6,7 @@ use Experiensa\Plugin\Modules\Request\Http;
 class Voyage
 {
     public static function getVoyages($decode = false){
-        $partner_api_url = EXPERIENSA_MAIN_API_URL.'/exp_voyage?&per_page=250';
+        $partner_api_url = EXPERIENSA_MAIN_API_URL.'/exp_voyage?per_page=100';
 //        return $partner_api_url;
         $response = Http::getApiResponse($partner_api_url,true);
 //        return $response;
@@ -18,7 +18,7 @@ class Voyage
         $partners = Partner::getPartnersApi();
         $voyages = [];
         foreach ($partners as $info){
-            $partner_url = $info['url'] . 'wp-json/wp/v2/exp_voyage?&per_page=250';
+            $partner_url = $info['url'] . 'wp-json/wp/v2/exp_voyage?per_page=100';
             $partner_response = Http::getApiResponse($partner_url,true);
             if(!isset($partner_response['error'])) {
                 $partner_response = json_decode($partner_response, true);
