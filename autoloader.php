@@ -6,7 +6,7 @@ function experiensa_autoloader($class){
     // project-specific namespace prefix
     $prefix = 'Experiensa\\Plugin\\';
     // base directory for the namespace prefix
-    $base_dir = __DIR__ . '/src/';
+    $base_dir = __DIR__ . '/includes/';
     // does the class use the namespace prefix?
     $len = strlen($prefix);
     if (strncmp($prefix, $class, $len) !== 0) {
