@@ -14,6 +14,7 @@
 * Custom Field: Panorama image
 * Custom Field: Portrait image
 * Add default media sizes (thumbnail, medium, Large)
+* Add thumbnail to GraphQL and REST API
 
 ### 0.10.0: November 20th, 2018
 * GraphQL Integration (plugins + voyage endpoint)

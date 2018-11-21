@@ -82,6 +82,13 @@ add_action( 'graphql_init', function() {
       },
     ];
 
+    $fields['thumbnail'] = [
+      'type' => \WPGraphQL\Types::string(),
+      'resolve' => function( \WP_Post $post ) {
+        return get_the_post_thumbnail_url($post->ID,'thumbnail');
+      },
+    ];
+
     $fields['operator'] = [
       'type' => \WPGraphQL\Types::string(),
       'resolve' => function( ) {

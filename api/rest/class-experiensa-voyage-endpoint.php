@@ -112,6 +112,7 @@ class Experiensa_Voyage_Endpoint extends WP_REST_Controller {
 
         // Media & attached Files
         'cover_image'       => get_the_post_thumbnail_url($voyage->ID),
+        'thumbnail'         => get_the_post_thumbnail_url($voyage->ID,'thumbnail'),
         'flyer'             => wp_get_attachment_url($voyage->exp_voyage_flyer),
         'portrait_image'    => wp_get_attachment_url($voyage->exp_voyage_portrait_image),
         'panorama_image'    => wp_get_attachment_url($voyage->exp_voyage_panorama_image),
