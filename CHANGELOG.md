@@ -13,6 +13,7 @@
 * Custom Field: discount price
 * Custom Field: Panorama image
 * Custom Field: Portrait image
+* Add default media sizes (thumbnail, medium, Large)
 
 ### 0.10.0: November 20th, 2018
 * GraphQL Integration (plugins + voyage endpoint)

@@ -123,14 +123,25 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/tgm-required-plugins.php';
 
 require plugin_dir_path( __FILE__ ) . 'api/graphql/voyages.php';
 
+//https://wordpress.stackexchange.com/questions/54423/add-image-size-in-a-plugin-i-created
+add_action( 'after_setup_theme', 'experiensa_image_size_setup' );
+function experiensa_image_size_setup() {
+  add_image_size('exp-thumbnail',600,9999);
+  update_option( 'thumbnail_size_w', 600 );
+  update_option( 'thumbnail_size_h', 9999 );
+  update_option( 'thumbnail_crop', false);
 
+  update_option( 'medium_size_w', 900 );
+  update_option( 'medium_size_h', 9999 );
 
+  update_option( 'large_size_w', 1024 );
+  update_option( 'large_size_h', 9999 );
+}
 
 
 
 
 // Victor's code
-
 function init_experiensa(){
   //Include the custom autoloader
   require_once EXPERIENSA_ABS . '/autoloader.php';
