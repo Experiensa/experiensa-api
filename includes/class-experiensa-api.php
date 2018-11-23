@@ -134,6 +134,10 @@ class Experiensa_Api {
      */
      require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/onload/class-experiensa-world-region-loader.php';
 
+     require_once plugin_dir_path( __FILE__ ) . 'includes/tgm-required-plugins.php';
+
+     require plugin_dir_path( __FILE__ ) . 'api/graphql/voyages.php';
+
 
 		$this->loader = new Experiensa_Api_Loader();
 
@@ -215,9 +219,9 @@ class Experiensa_Api {
    */
   private function define_api() {
 
-    $plugin_public = new Experiensa_Api_Public( $this->get_plugin_name(), $this->get_version() );
+    //$plugin_public = new Experiensa_Api_Public( $this->get_plugin_name(), $this->get_version() );
 
-    $this->loader->add_action( 'after_setup_theme', $plugin_public, 'experiensa_image_size_setup' );
+    //$this->loader->add_action( 'after_setup_theme', $plugin_public, 'experiensa_image_size_setup' );
 
   }
 

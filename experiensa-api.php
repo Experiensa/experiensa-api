@@ -65,6 +65,51 @@ define('EXPERIENSA_DIST_URL', plugin_dir_url(__FILE__) . 'dist/');
 define('EXPERIENSA_MAIN_API_URL', get_bloginfo('url') . '/wp-json/wp/v2');
 define('EXPERIENSA_DIR_NAME', dirname(plugin_basename(__FILE__)));
 
+
+
+
+function init_experiensa(){
+  //Include the custom autoloader
+  require_once EXPERIENSA_ABS . '/autoloader.php';
+  //new Experiensa\Plugin\Includes\Requires();
+  new Experiensa\Plugin\Includes\Asset();
+  new Experiensa\Plugin\Modules\Ajax();
+  Experiensa\Plugin\Models\Register::init();
+  Experiensa\Plugin\Modules\Settings::addSettingPages();
+  new \Experiensa\Plugin\Modules\Defaults();
+  new Experiensa\Plugin\Modules\Api\RegisterApi();
+}
+add_action('init','init_experiensa');
+
+function experiensa_rewrite_flush(){
+  require_once EXPERIENSA_ABS . '/autoloader.php';
+  Experiensa\Plugin\Models\Register::register_flush_rewrite_rules();
+}
+register_activation_hook(EXPERIENSA_FILE, 'experiensa_rewrite_flush');
+
+//https://github.com/WP-API/WP-API/issues/259
+add_filter( 'json_url', function( $url ) {
+  if ( force_ssl_admin() ){
+    return set_url_scheme( $url, 'https' );
+  } else {
+    return $url;
+  }
+} );
+
+
+add_filter( 'rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1 );
+function my_prefix_change_post_per_page( $params ) {
+  if ( isset( $params['per_page'] ) ) {
+    $params['per_page']['maximum'] = 200;
+  }
+  return $params;
+}
+
+
+
+
+
+
 /**
 * The code that runs during plugin activation.
 * This action is documented in includes/class-experiensa-api-activator.php
@@ -116,50 +161,3 @@ function run_experiensa_api() {
 
 }
 run_experiensa_api();
-
-
-//gab's code
-require_once plugin_dir_path( __FILE__ ) . 'includes/tgm-required-plugins.php';
-
-require plugin_dir_path( __FILE__ ) . 'api/graphql/voyages.php';
-
-
-
-
-// Victor's code
-function init_experiensa(){
-  //Include the custom autoloader
-  require_once EXPERIENSA_ABS . '/autoloader.php';
-  //new Experiensa\Plugin\Includes\Requires();
-  new Experiensa\Plugin\Includes\Asset();
-  new Experiensa\Plugin\Modules\Ajax();
-  Experiensa\Plugin\Models\Register::init();
-  Experiensa\Plugin\Modules\Settings::addSettingPages();
-  new \Experiensa\Plugin\Modules\Defaults();
-  new Experiensa\Plugin\Modules\Api\RegisterApi();
-}
-add_action('init','init_experiensa');
-
-function experiensa_rewrite_flush(){
-  require_once EXPERIENSA_ABS . '/autoloader.php';
-  Experiensa\Plugin\Models\Register::register_flush_rewrite_rules();
-}
-register_activation_hook(EXPERIENSA_FILE, 'experiensa_rewrite_flush');
-
-//https://github.com/WP-API/WP-API/issues/259
-add_filter( 'json_url', function( $url ) {
-  if ( force_ssl_admin() ){
-    return set_url_scheme( $url, 'https' );
-  } else {
-    return $url;
-  }
-} );
-
-
-add_filter( 'rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1 );
-function my_prefix_change_post_per_page( $params ) {
-  if ( isset( $params['per_page'] ) ) {
-    $params['per_page']['maximum'] = 200;
-  }
-  return $params;
-}
