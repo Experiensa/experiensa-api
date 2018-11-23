@@ -25,7 +25,7 @@ class Experiensa_World_Region_Loader{
 
     /** Amérique du nord ******************************************************/
     $anord = ['description' => 'Canada, États-Unis, Groenland, Mexique'];
-    wp_insert_term( 'Amériques du nord', 'exp_region', $anord);
+    wp_insert_term( 'Amérique du nord', 'exp_region', $anord);
 
     /** Amérique centrale *****************************************************/
     $acentral = ['description' => 'Belize, Costa Rica, Guatemala, Honduras, Nicaragua, Panamá, Salvador'];
