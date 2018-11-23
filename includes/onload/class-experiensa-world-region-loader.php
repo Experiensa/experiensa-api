@@ -25,7 +25,7 @@ class Experiensa_World_Region_Loader{
 
     /** Amérique du nord ******************************************************/
     $anord = ['description' => 'Canada, États-Unis, Groenland, Mexique'];
-    wp_insert_term( 'Amériquess du nord', 'exp_region', $anord);
+    wp_insert_term( 'Amériques du nord', 'exp_region', $anord);
 
     /** Amérique centrale *****************************************************/
     $acentral = ['description' => 'Belize, Costa Rica, Guatemala, Honduras, Nicaragua, Panamá, Salvador'];
@@ -53,7 +53,7 @@ class Experiensa_World_Region_Loader{
 
     /** Scandinavie ***********************************************************/
     $scandinavie = ['description' => 'Denmark, Norway, Sweden, Finland, Iceland, Faroe Islands, Åland Islands'];
-    wp_insert_term( 'Scandinavie', 'exp_region');
+    wp_insert_term( 'Scandinavie', 'exp_region', $scandinavie);
 
     /** Europe ****************************************************************/
     $europe = ['description' => 'Belgique, Pays-Bas, Luxembourg, Allemagne, Autriche, Liechtenstein, Slovénie, Suisse, Angleterre, Écosse, Pays de Galles, Irlande du Nord, Irlande'];
