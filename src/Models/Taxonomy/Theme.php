@@ -49,7 +49,7 @@ class Theme{
     public static function add_exp_theme_taxonomy() {
         $taxonomy = 'exp_theme';
         $df_theme_en = ['City','Safari','Nature','Sport','Wellness','Leisure','Beach','Honeymoon','Adventure','Party','Mountain','Cruise','Culinary','Shopping','Culture','Romance'];
-        $df_theme_fr = ['Ville','Safari','Nature','Sport','Bien-être','Loisir','Plage','Voyage de noces','Aventure','Fetes','Montagne','Croisieres','Culinaire','Shopping','Cuture','Romance'];
+        $df_theme_fr = ['Aventure', 'Bien-être', 'Business', 'Croisière', 'Culinaire', 'Culture', 'Découverte', 'Divertissement', 'Fetes', 'Gastronomie', 'Golf', 'Histoire', 'Loisir', 'Montagne', 'Nature', 'Plage', 'Relaxation','Repos', 'Romantice', 'Safari','Shopping', 'Spa', 'Sport', 'Ville','Voyage de noces'];
         $df_theme_es = ['Ciudad','Safari','Naturaleza','Deporte','Bienestar','Ocio','Playa','Luna de miel','Aventura','Fiesta','Montaña','Cruceros','Culinario','Shopping','Cultura','Romance'];
         $df_theme = $df_theme_en;
         //

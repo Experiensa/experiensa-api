@@ -7,8 +7,16 @@
 //// Structure
 //// Required Plugins
 //// include price parameters (%, fix, dates, etc)
+/// follow examples from https://github.com/JoeSz/WordPress-Plugin-Boilerplate-Tutorial, https://torquemag.io/2016/09/building-a-wordpress-plugin-part-3-setting-up-a-custom-content-type/
+/// CHANGE: Load world regions, countries and themes on activation, not after!
+/// Document
 
-### 0.11.0: November 21th, 2018
+### 0.10.2: November 23th, 2018
+* Load world regions automatically
+* Load countries automatically
+* Load themes automatically (list of themes updated)
+
+### 0.10.1: November 21th, 2018
 * Custom Field: Add link for voyage original source
 * Custom Field: discount price
 * Custom Field: Panorama image

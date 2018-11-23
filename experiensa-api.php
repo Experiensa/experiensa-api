@@ -123,21 +123,6 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/tgm-required-plugins.php';
 
 require plugin_dir_path( __FILE__ ) . 'api/graphql/voyages.php';
 
-//https://wordpress.stackexchange.com/questions/54423/add-image-size-in-a-plugin-i-created
-add_action( 'after_setup_theme', 'experiensa_image_size_setup' );
-function experiensa_image_size_setup() {
-  add_image_size('exp-thumbnail',600,9999);
-  update_option( 'thumbnail_size_w', 600 );
-  update_option( 'thumbnail_size_h', 9999 );
-  update_option( 'thumbnail_crop', false);
-
-  update_option( 'medium_size_w', 900 );
-  update_option( 'medium_size_h', 9999 );
-
-  update_option( 'large_size_w', 1024 );
-  update_option( 'large_size_h', 9999 );
-}
-
 
 
 
@@ -160,6 +145,7 @@ function experiensa_rewrite_flush(){
   Experiensa\Plugin\Models\Register::register_flush_rewrite_rules();
 }
 register_activation_hook(EXPERIENSA_FILE, 'experiensa_rewrite_flush');
+
 //https://github.com/WP-API/WP-API/issues/259
 add_filter( 'json_url', function( $url ) {
   if ( force_ssl_admin() ){
@@ -169,8 +155,8 @@ add_filter( 'json_url', function( $url ) {
   }
 } );
 
-add_filter( 'rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1 );
 
+add_filter( 'rest_post_collection_params', 'my_prefix_change_post_per_page', 10, 1 );
 function my_prefix_change_post_per_page( $params ) {
   if ( isset( $params['per_page'] ) ) {
     $params['per_page']['maximum'] = 200;

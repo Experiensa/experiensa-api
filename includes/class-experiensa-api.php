@@ -78,6 +78,8 @@ class Experiensa_Api {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+    $this->define_default_setup();
+    $this->define_api();
 
 	}
 
@@ -122,6 +124,17 @@ class Experiensa_Api {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-experiensa-api-public.php';
 
+    /**
+     * The class responsible for defining default configuration for the experiensa website
+     */
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-experiensa-default-setup.php';
+
+    /**
+     * The class responsible for loading world regions in the region taxonomy
+     */
+     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/onload/class-experiensa-world-region-loader.php';
+
+
 		$this->loader = new Experiensa_Api_Loader();
 
 	}
@@ -153,9 +166,13 @@ class Experiensa_Api {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Experiensa_Api_Admin( $this->get_plugin_name(), $this->get_version() );
+    $region_loader = new Experiensa_World_Region_Loader();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+    //$this->loader->add_action( 'wp_loaded', $region_loader, 'load_world_region');
+    //$this->loader->add_action( 'wp_loaded', $region_loader, 'load_countries');
 
 	}
 
@@ -174,6 +191,35 @@ class Experiensa_Api {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 	}
+
+  /**
+   * Register all of the hooks related to the public-facing functionality
+   * of the plugin.
+   *
+   * @since    1.0.0
+   * @access   private
+   */
+  private function define_default_setup() {
+
+    $plugin_setup = new Experiensa_Default_Setup();
+
+    $this->loader->add_action( 'after_setup_theme', $plugin_setup, 'experiensa_default_image_size' );
+
+  }
+
+  /**
+   * Register all of the hooks related to the API Routes and Endpoints
+   *
+   * @since    1.0.0
+   * @access   private
+   */
+  private function define_api() {
+
+    $plugin_public = new Experiensa_Api_Public( $this->get_plugin_name(), $this->get_version() );
+
+    $this->loader->add_action( 'after_setup_theme', $plugin_public, 'experiensa_image_size_setup' );
+
+  }
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
