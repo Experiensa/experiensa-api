@@ -134,9 +134,15 @@ class Experiensa_Api {
      */
      require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/onload/class-experiensa-world-region-loader.php';
 
-     require_once plugin_dir_path( __FILE__ ) . 'includes/tgm-required-plugins.php';
+     /**
+      * The class responsible for Admin messages for required and/or recommended plugins
+      */
+     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/tgm-required-plugins.php';
 
-     require plugin_dir_path( __FILE__ ) . 'api/graphql/voyages.php';
+     /**
+      * The class responsible for loading voyage endpoint in graphql
+      */
+     require plugin_dir_path( dirname( __FILE__ ) ) . 'api/graphql/voyages.php';
 
 
 		$this->loader = new Experiensa_Api_Loader();
