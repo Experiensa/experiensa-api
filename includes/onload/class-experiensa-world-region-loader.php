@@ -100,7 +100,7 @@ class Experiensa_World_Region_Loader{
 
   public function load_themes(){
     $themes = [
-      'Voyage de noces', 'Romantique', 'Aventure',
+      'Voyage de noces', 'Romantique', 'Aventure','Circuits',
       'Business','Loisir', 'Découverte', 'Gastronomie',
       'Histoire', 'Croisière', 'Safari', 'Plage', 'Sport',
       'Nature', 'Golf', 'Bien-être', 'Shopping', 'Repos', 'Ville', 'Culture', 'Divertissement', 'Spa'

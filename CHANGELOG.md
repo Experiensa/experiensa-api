@@ -10,9 +10,11 @@
 /// follow examples from https://github.com/JoeSz/WordPress-Plugin-Boilerplate-Tutorial, https://torquemag.io/2016/09/building-a-wordpress-plugin-part-3-setting-up-a-custom-content-type/
 /// CHANGE: Load world regions, countries and themes on activation, not after!
 /// Document
+/// Disable voyage if today() is < end_date (NOT working)
 
 ### 0.10.3: November 24th, 2018
 * Change date format to ISO (yy-mm-dd), compatible with appbase
+* Circuits added to list of themes
 
 ### 0.10.2: November 23th, 2018
 * Load world regions automatically
