@@ -70,7 +70,7 @@ $offer_start_date = array(
   'type'      => 'datepicker',
   'field'     => 'exp_voyage_start_date',
   'label'     => __('Start date','experiensa'),
-  'options'   => array( 'dateFormat' => 'dd/mm/yy'),
+  'options'   => array( 'dateFormat' => 'yy-mm-dd'),
   'columns'   => 4
 );
 
@@ -78,7 +78,7 @@ $expiry_date = array(
   'type'      => 'datepicker',
   'field'     => 'exp_voyage_end_date',
   'label'     => __('End date','experiensa'),
-  'options'   => array( 'dateFormat' => 'dd/mm/yy'),
+  'options'   => array( 'dateFormat' => 'yy-mm-dd'),
   'columns'   => 4
 );
 

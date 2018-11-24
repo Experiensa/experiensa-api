@@ -1,6 +1,5 @@
 <?php namespace Experiensa\Plugin\Modules\Api\Field;
 
-
 class Posts
 {
     public $ctp;

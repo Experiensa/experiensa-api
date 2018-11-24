@@ -11,6 +11,9 @@
 /// CHANGE: Load world regions, countries and themes on activation, not after!
 /// Document
 
+### 0.10.3: November 24th, 2018
+* Change date format to ISO (yy-mm-dd), compatible with appbase
+
 ### 0.10.2: November 23th, 2018
 * Load world regions automatically
 * Load countries automatically
