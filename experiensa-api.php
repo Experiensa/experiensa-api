@@ -67,7 +67,7 @@ define('EXPERIENSA_DIR_NAME', dirname(plugin_basename(__FILE__)));
 
 
 
-
+/*
 function init_experiensa(){
   //Include the custom autoloader
   require_once EXPERIENSA_ABS . '/autoloader.php';
@@ -105,7 +105,7 @@ function my_prefix_change_post_per_page( $params ) {
   return $params;
 }
 
-
+*/
 
 
 
@@ -115,7 +115,7 @@ function my_prefix_change_post_per_page( $params ) {
 * This action is documented in includes/class-experiensa-api-activator.php
 */
 function activate_experiensa_api() {
-  require_once plugin_dir_path( __FILE__ ) . 'includes/class-experiensa-api-activator.php';
+  require_once plugin_dir_path( __FILE__ ) . 'includes/class-experiensa-api-activator.php';  
   Experiensa_Api_Activator::activate();
 }
 
@@ -129,7 +129,9 @@ function deactivate_experiensa_api() {
   Experiensa_Api_Deactivator::deactivate();
 }
 
-
+register_activation_hook( __FILE__, 'activate_experiensa_api' );
+register_deactivation_hook( __FILE__, 'deactivate_experiensa_api' );
+/*
 add_action( 'rest_api_init', function () {
   require plugin_dir_path( __FILE__ ) . 'api/rest/class-experiensa-voyage-endpoint.php';
   $controller = new Experiensa_Voyage_Endpoint();
@@ -138,7 +140,7 @@ add_action( 'rest_api_init', function () {
 
 register_activation_hook( __FILE__, 'activate_experiensa_api' );
 register_deactivation_hook( __FILE__, 'deactivate_experiensa_api' );
-
+*/
 /**
 * The core plugin class that is used to define internationalization,
 * admin-specific hooks, and public-facing site hooks.

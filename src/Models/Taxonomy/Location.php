@@ -1,11 +1,10 @@
-<?php namespace Experiensa\Plugin\Models\Taxonomy;
+<?php
 
 class Location{
-    public static function init(){
-        add_action( 'init' , array(__CLASS__,'addTaxonomy') );
-//        add_action( 'after_switch_theme', 'flush_rewrite_rules' );
+    public function __construct() {
+        add_action( 'init', array( $this, 'addTaxonomy' ) );
     }
-    public static function addTaxonomy(){
+    public function addTaxonomy(){
 		$labels = array(
 			'name'                       => _x( 'Destinations', 'Taxonomy General Name', 'experiensa' ),
 			'singular_name'              => _x( 'Destination', 'Taxonomy Singular Name', 'experiensa' ),

@@ -1,10 +1,10 @@
-<?php namespace Experiensa\Plugin\Models\Taxonomy;
+<?php
 
 class Region{
-    public static function init(){
-        add_action( 'init' , array(__CLASS__,'addTaxonomy'), 0 );
+    public function __construct() {
+        add_action( 'init', array( $this, 'addTaxonomy' ) );
     }
-    public static function addTaxonomy(){
+    public function addTaxonomy(){
         $labels = array(
             'name'                       => _x( 'World Regions', 'Taxonomy General Name', 'experiensa' ),
             'singular_name'              => _x( 'World Region', 'Taxonomy Singular Name', 'experiensa' ),

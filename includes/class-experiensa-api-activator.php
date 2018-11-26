@@ -10,23 +10,12 @@
  * @subpackage Experiensa_Api/includes
  */
 
-/**
- * Fired during plugin activation.
- *
- * This class defines all code necessary to run during the plugin's activation.
- *
- * @since      1.0.0
- * @package    Experiensa_Api
- * @subpackage Experiensa_Api/includes
- * @author     Gabriel Zambrano <gabriel@experiensa.com>
- */
 class Experiensa_Api_Activator {
 
   public function load_world_region(){
     $anord = ['description' => 'Canada, États-Unis, Groenland, Mexique'];
     wp_insert_term( 'Amérique du nord', 'exp_region', $anord);
   }
-
 
 	/**
 	 * Short Description. (use period)
@@ -46,6 +35,9 @@ class Experiensa_Api_Activator {
 
     //$region = new Experiensa_World_Region_Loader();
     //$region::load();
+    require_once EXPERIENSA_ABS . '/autoloader.php';
+    $register = new Register();
+    $register->register_flush_rewrite_rules();
 	}
 
 

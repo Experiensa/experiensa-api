@@ -89,8 +89,8 @@ function pf_register_required_plugins() {
 			'name'         => 'WPGraphQL',
 			'slug'         => 'wp-graphql',
 			'source'       => 'https://github.com/wp-graphql/wp-graphql/archive/develop.zip',
-      'required'     => true,
-      'external_url' => 'https://github.com/wp-graphql/wp-graphql'
+      		'required'     => true,
+      		'external_url' => 'https://github.com/wp-graphql/wp-graphql'
 		),
 
 
@@ -101,12 +101,23 @@ function pf_register_required_plugins() {
 		// 	'required'  => false,
 		// ),
 
-    array(
-      'name'      => 'Piklist',
-      'slug'      => 'piklist',
-      'required'  => true,
-    ),
-
+		array(
+			'name'      => 'Piklist',
+			'slug'      => 'piklist',
+			'required'  => true,
+		),
+		array(
+			'name'      => 'rest-filter - Filter parameter for posts endpoints',
+			'slug'      => 'rest-filter',
+			'required'  => true,
+			'external_url'       => 'https://github.com/wp-api/rest-filter'
+		),
+		array(
+			'name'      => 'Live Composer',
+			'slug'      => 'live-composer-page-builder',
+			'required'  => true,
+			'external_url'       => 'https://livecomposerplugin.com/downloads/live-composer-page-builder/'
+		),
 
 		// This is an example of the use of 'is_callable' functionality. A user could - for instance -
 		// have WPSEO installed *or* WPSEO Premium. The slug would in that last case be different, i.e.

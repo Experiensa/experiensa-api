@@ -1,11 +1,14 @@
-<?php namespace Experiensa\Plugin\Models\Taxonomy;
+<?php
 
 class Theme{
-    public static function init(){
+    public function __construct() {
+        add_action( 'init', array( $this, 'addTaxonomy' ) );
+    }
+    /*public static function init(){
         add_action( 'init' , array(__CLASS__,'addTaxonomy'), 0 );
         add_action( 'after_switch_theme', 'flush_rewrite_rules' );
-    }
-    public static function addTaxonomy(){
+    }*/
+    public function addTaxonomy(){
         $labels = array(
             'name'                       => _x( 'Themes', 'Taxonomy General Name', 'experiensa' ),
             'singular_name'              => _x( 'Theme', 'Taxonomy Singular Name', 'experiensa' ),
@@ -44,9 +47,9 @@ class Theme{
             'rewrite'                    => $rewrite,
         );
         register_taxonomy( 'exp_theme', array( 'post', 'attachment', 'exp_voyage', 'exp_service', 'exp_host' ), $args );
-        self::add_exp_theme_taxonomy();
+        $this->add_exp_theme_taxonomy();
     }
-    public static function add_exp_theme_taxonomy() {
+    public function add_exp_theme_taxonomy() {
         $taxonomy = 'exp_theme';
         $df_theme_en = ['City','Safari','Nature','Sport','Wellness','Leisure','Beach','Honeymoon','Adventure','Party','Mountain','Cruise','Culinary','Shopping','Culture','Romance'];
         $df_theme_fr = ['Aventure', 'Bien-être', 'Business', 'Croisière', 'Culinaire', 'Culture', 'Découverte', 'Divertissement', 'Fetes', 'Gastronomie', 'Golf', 'Histoire', 'Loisir', 'Montagne', 'Nature', 'Plage', 'Relaxation','Repos', 'Romantice', 'Safari','Shopping', 'Spa', 'Sport', 'Ville','Voyage de noces'];

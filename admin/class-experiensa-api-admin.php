@@ -39,7 +39,6 @@ class Experiensa_Api_Admin {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
-
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -100,4 +99,12 @@ class Experiensa_Api_Admin {
 
 	}
 
+	public function remove_lc_menu_items(){
+		remove_menu_page( 'edit.php?post_type=dslc_downloads' );
+		remove_menu_page( 'edit.php?post_type=dslc_galleries' );
+		remove_menu_page( 'edit.php?post_type=dslc_partners' );
+		remove_menu_page( 'edit.php?post_type=dslc_projects' );
+		remove_menu_page( 'edit.php?post_type=dslc_staff' );
+		remove_menu_page( 'edit.php?post_type=dslc_testimonials' );
+	}
 }

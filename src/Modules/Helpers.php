@@ -1,9 +1,10 @@
-<?php namespace Experiensa\Plugin\Modules;
+<?php
 
 
-class Helpers
-{
-    public static function check_internet_connection(){
+class Helpers{
+    public function __construct() {
+    }
+    public function check_internet_connection(){
         $connected = @fsockopen("www.google.com", 80);
         //website, port  (try 80 or 443)
         if ($connected){
@@ -14,18 +15,17 @@ class Helpers
         }
         return $is_conn;
     }
-    
-    public static function checkWPMLactive(){
+    public function checkWPMLactive(){
         return function_exists('icl_object_id');
     }
-    public static function checkValidURL($url){
+    public function checkValidURL($url){
         return filter_var($url, FILTER_VALIDATE_URL);
     }
     /**
      * If WPML plugin is active get active language code
      * @return bool
      */
-    public static function getActiveLanguageCode(){
+    public function getActiveLanguageCode(){
         $code = false;
         //Check if WPML is installed
         if ( function_exists('icl_object_id') ) {
@@ -34,20 +34,20 @@ class Helpers
         }
         return $code;
     }
-    public static function getBlogLanguage(){
+    public function getBlogLanguage(){
         return get_bloginfo("language");
     }
-    public static function getBlogLanguageSimple(){
+    public function getBlogLanguageSimple(){
         $lang = self::getBlogLanguage();
         $lang = explode("-",$lang,2);
         return $lang[0];
     }
-    public static function getSiteLanguageCode(){
+    public function getSiteLanguageCode(){
         $lang = self::getActiveLanguageCode();
         $lang = (!$lang?strtolower(self::getBlogLanguageSimple()):strtolower($lang));
         return $lang;
     }
-    public static function  hex2rgb($hex,$array=false) {
+    public function  hex2rgb($hex,$array=false) {
         $hex = str_replace("#", "", $hex);
 
         if(strlen($hex) == 3) {
@@ -64,7 +64,7 @@ class Helpers
             return implode(",", $rgb); // returns the rgb values separated by commas
         return $rgb; // returns an array with the rgb values
     }
-    public static function rgb2hex($rgb) {
+    public function rgb2hex($rgb) {
         $hex = "#";
         $hex .= str_pad(dechex($rgb[0]), 2, "0", STR_PAD_LEFT);
         $hex .= str_pad(dechex($rgb[1]), 2, "0", STR_PAD_LEFT);
@@ -72,10 +72,10 @@ class Helpers
 
         return $hex; // returns the hex value including the number sign (#)
     }
-    public static function getAttachmentUrlByID($id){
+    public function getAttachmentUrlByID($id){
         return ($id?wp_get_attachment_url($id):"");
     }    
-    public static function normalizeChars($str){
+    public function normalizeChars($str){
         $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
             'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
             'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
@@ -84,7 +84,7 @@ class Helpers
         return strtr( $str, $unwanted_array );
     }
     //TODO: Delete unused Helpers methods
-    public static function getPageTemplateNames(){
+    public function getPageTemplateNames(){
         $templates = get_page_templates();
         $templates_names = array();
         foreach ($templates as $key => $value){
@@ -93,13 +93,13 @@ class Helpers
         }
         return $templates_names;
     }
-    public static function getTemplatePathByID($id){
+    public function getTemplatePathByID($id){
         $template = get_post_meta( $id, '_wp_page_template', true );
         if($template == 'default')
             $template = 'index.php';
         return $template;
     }
-    public static function getTemplatePath($template_name){
+    public function getTemplatePath($template_name){
         $path = 'index.php';
         $templates = wp_get_theme()->get_page_templates();
         foreach ($templates as $key => $value){
@@ -110,11 +110,8 @@ class Helpers
         }
         return $path;
     }
-    /**
-     * @return array
-     */
-    public static function getPagesFromCurrentLanguage(){
-        $page_ids=get_all_page_ids();
+    public function getPagesFromCurrentLanguage(){
+        $page_ids = get_all_page_ids();
         $pages = array();
         foreach($page_ids as $id) {
             //Check if WPML is installed and activated
@@ -131,12 +128,7 @@ class Helpers
         }
         return $pages;
     }
-
-    /**
-     * @param $template
-     * @return array
-     */
-    public static function getPagesByTemplate($template){
+    public function getPagesByTemplate($template){
         $pages = get_pages(array(
             'meta_key' => '_wp_page_template',
             'meta_value' => $template
@@ -148,7 +140,7 @@ class Helpers
         return $page_list;
     }
 
-    public static function getComponentList(){
+    public function getComponentList(){
         $components = [
             'button'        => __('Buttons','experiensa'),
             'carousel'      => __('Carousel','experiensa'),
@@ -167,7 +159,7 @@ class Helpers
     }  
     
     
-    public static function getHoverEffectList(){
+    public function getHoverEffectList(){
         $effects = array(
             'imghvr-fade'                  => __('Fade', 'experiensa'),
             'imghvr-push-up'               => __('Push up', 'experiensa'),
@@ -216,7 +208,7 @@ class Helpers
         return $effects;
     }    
 
-    public static function arrayToString($array, $key){
+    public function arrayToString($array, $key){
         $string = '';
         if (isset($array[$key])) {
             $array = $array[$key];

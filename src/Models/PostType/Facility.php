@@ -1,10 +1,10 @@
-<?php namespace Experiensa\Plugin\Models\PostType;
+<?php
 
 class Facility{
-    public static function init(){
-        add_action( 'init' , array(__CLASS__,'addCustomPostType'), 10, 1 );
-    }
-    public static function addCustomPostType(){
+    public function __construct() {
+        add_action( 'init', array( $this, 'addCustomPostType' ) );
+      }
+    public function addCustomPostType(){
         $labels = array(
             'name'                  => _x( 'Facility', 'Post Type General Name', 'experiensa'),
             'singular_name'         => _x( 'Facility', 'Post Type Singular Name', 'experiensa'),

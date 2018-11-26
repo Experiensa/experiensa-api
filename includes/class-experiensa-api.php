@@ -56,7 +56,7 @@ class Experiensa_Api {
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
-
+	protected $register;
 	/**
 	 * Define the core functionality of the plugin.
 	 *
@@ -78,8 +78,8 @@ class Experiensa_Api {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-    $this->define_default_setup();
-    $this->define_api();
+		$this->define_default_setup();
+		$this->define_api();
 
 	}
 
@@ -100,7 +100,7 @@ class Experiensa_Api {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
+		require_once EXPERIENSA_ABS . '/autoloader.php';
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
@@ -124,28 +124,30 @@ class Experiensa_Api {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-experiensa-api-public.php';
 
-    /**
-     * The class responsible for defining default configuration for the experiensa website
-     */
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-experiensa-default-setup.php';
+		/**
+		 * The class responsible for defining default configuration for the experiensa website
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-experiensa-default-setup.php';
 
-    /**
-     * The class responsible for loading world regions in the region taxonomy
-     */
-     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/onload/class-experiensa-world-region-loader.php';
+		/**
+		 * The class responsible for loading world regions in the region taxonomy
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/onload/class-experiensa-world-region-loader.php';
 
-     /**
-      * The class responsible for Admin messages for required and/or recommended plugins
-      */
-     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/tgm-required-plugins.php';
+		/**
+		 * The class responsible for Admin messages for required and/or recommended plugins
+		*/
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/tgm-required-plugins.php';
 
-     /**
-      * The class responsible for loading voyage endpoint in graphql
-      */
-     require plugin_dir_path( dirname( __FILE__ ) ) . 'api/graphql/voyages.php';
+		/**
+		 * The class responsible for loading voyage endpoint in graphql
+		*/
+		require plugin_dir_path( dirname( __FILE__ ) ) . 'api/graphql/voyages.php';
 
-
+		$this->register = new Register();
 		$this->loader = new Experiensa_Api_Loader();
+
+		$this->register->init();
 
 	}
 
@@ -176,14 +178,15 @@ class Experiensa_Api {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Experiensa_Api_Admin( $this->get_plugin_name(), $this->get_version() );
-    $region_loader = new Experiensa_World_Region_Loader();
+    	$region_loader = new Experiensa_World_Region_Loader();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action('admin_menu', $plugin_admin, 'remove_lc_menu_items');
 
-    $this->loader->add_action( 'wp_loaded', $region_loader, 'load_world_region');
-    $this->loader->add_action( 'wp_loaded', $region_loader, 'load_countries');
-
+		$this->loader->add_action( 'wp_loaded', $region_loader, 'load_world_region');
+		$this->loader->add_action( 'wp_loaded', $region_loader, 'load_countries');
+		
 	}
 
 	/**
