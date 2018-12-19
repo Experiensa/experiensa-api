@@ -71,12 +71,12 @@ define('EXPERIENSA_DIR_NAME', dirname(plugin_basename(__FILE__)));
 function init_experiensa(){
   //Include the custom autoloader
   require_once EXPERIENSA_ABS . '/autoloader.php';
-  //new Experiensa\Plugin\Includes\Requires();
-  new Experiensa\Plugin\Includes\Asset();
-  new Experiensa\Plugin\Modules\Ajax();
-  Experiensa\Plugin\Models\Register::init();
-  Experiensa\Plugin\Modules\Settings::addSettingPages();
-  new \Experiensa\Plugin\Modules\Defaults();
+  //new Experiensa\Plugin\Includes\Requires(); LISTO
+  //new Experiensa\Plugin\Includes\Asset(); LISTO
+  new Experiensa\Plugin\Modules\Ajax(); LISTO
+  Experiensa\Plugin\Models\Register::init();//LISTO
+  Experiensa\Plugin\Modules\Settings::addSettingPages(); //Listo con error
+  new \Experiensa\Plugin\Modules\Defaults();//Listo
   new Experiensa\Plugin\Modules\Api\RegisterApi();
 }
 add_action('init','init_experiensa');
@@ -119,6 +119,7 @@ function activate_experiensa_api() {
   Experiensa_Api_Activator::activate();
 }
 
+register_activation_hook( __FILE__, 'activate_experiensa_api' );
 
 /**
 * The code that runs during plugin deactivation.
@@ -129,7 +130,6 @@ function deactivate_experiensa_api() {
   Experiensa_Api_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_experiensa_api' );
 register_deactivation_hook( __FILE__, 'deactivate_experiensa_api' );
 /*
 add_action( 'rest_api_init', function () {

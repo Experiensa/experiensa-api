@@ -178,11 +178,44 @@ class Experiensa_Api {
 	private function define_admin_hooks() {
 
 		$plugin_admin = new Experiensa_Api_Admin( $this->get_plugin_name(), $this->get_version() );
-    	$region_loader = new Experiensa_World_Region_Loader();
+		$region_loader = new Experiensa_World_Region_Loader();
+		$assets = new Asset();
+		$ajax = new Ajax();
+		$setting = new Settings();
+		$default = new Defaults();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		//Admin experiensa scripts
+		$this->loader->add_action( 'admin_enqueue_scripts', $assets, 'load_admin_scripts' );
+		//Ajax loader
+		$this->loader->add_action('wp_ajax_requestCountryName', $ajax, 'requestCountryName' );
+		$this->loader->add_action('wp_ajax_nopriv_requestCountryName', $ajax, 'requestCountryName' );
+		$this->loader->add_action('wp_ajax_requestVoyageForm', $ajax, 'requestVoyageForm' );
+		$this->loader->add_action('wp_ajax_nopriv_requestVoyageForm', $ajax, 'requestVoyageForm' );
+
 		$this->loader->add_action('admin_menu', $plugin_admin, 'remove_lc_menu_items');
+		
+		$this->loader->add_filter('piklist_admin_pages', $setting, 'defineDefaultSettingPage');
+		$this->loader->add_filter('piklist_admin_pages', $setting, 'defineTutorialSettingPage');
+		//Defaults
+		$this->loader->add_filter('upload_mimes', $default, 'cc_mime_types');
+		$this->loader->add_filter('body_class', $default, 'add_custom_body_class');
+		$this->loader->add_action('user_register', $default, 'set_default_admin_color_schema');
+		$this->loader->add_filter('query_vars', $default, 'add_query_vars_filter');
+		$this->loader->add_filter('wp_mail_from_name', $default, 'email_sender_name');
+		$this->loader->add_action('admin_menu', $default, 'hide_custom_post_types');
+		$this->loader->add_filter('piklist_part_process_callback', $default, 'hide_hotel_settings_tab', 10, 2);
+
+		//add_action('user_register', array($this,'set_default_admin_color_schema'));
+        //add_filter( 'query_vars', array($this,'add_query_vars_filter' ));
+        //add_filter( 'wp_mail_from_name', array($this,'email_sender_name' ));
+        //add_action( 'admin_menu', array($this,'hide_custom_post_types' ));
+        //add_filter('piklist_part_process_callback',array($this,'hide_hotel_settings_tab'), 10, 2);
+        if ( class_exists( 'Jetpack' ) && \Jetpack::is_module_active( 'tiled-gallery' ) ){
+			$this->loader->add_filter('tiled_gallery_content_width', $default, 'wpsites_custom_tiled_gallery_width');
+            //add_filter( 'tiled_gallery_content_width', array($this,'wpsites_custom_tiled_gallery_width' ));
+        }
 
 		$this->loader->add_action( 'wp_loaded', $region_loader, 'load_world_region');
 		$this->loader->add_action( 'wp_loaded', $region_loader, 'load_countries');

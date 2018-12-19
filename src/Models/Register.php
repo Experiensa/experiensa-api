@@ -13,6 +13,7 @@ use Experiensa\Plugin\Models\Taxonomy\Theme;
 /* Register custom post types and taxonomies */
 class Register{
     public function __construct() {
+        
     }
     public function init(){
         new Estimate();

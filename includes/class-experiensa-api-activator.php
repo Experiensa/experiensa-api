@@ -36,6 +36,7 @@ class Experiensa_Api_Activator {
     //$region = new Experiensa_World_Region_Loader();
     //$region::load();
     require_once EXPERIENSA_ABS . '/autoloader.php';
+    //Register Post-types and Taxonomies
     $register = new Register();
     $register->register_flush_rewrite_rules();
 	}

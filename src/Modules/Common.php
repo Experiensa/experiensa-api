@@ -1,14 +1,16 @@
-<?php namespace Experiensa\Plugin\Modules;
+<?php // namespace Experiensa\Plugin\Modules;
 
 //use Experiensa\Plugin\Modules\Helpers;
 // Contain many common use methods
-class Common
-{
+class Common{
+    public function __construct(){
+
+    }
     /**
      *  Returns a list of common currencies
      * @return array
      */
-    public static function currency_list(){
+    public function currency_list(){
         $currency = array (
             'ALL' => 'Albania Lek',
             'AFN' => 'Afghanistan Afghani',
@@ -135,9 +137,9 @@ class Common
      * is the combination of the abbreviation with the name of the currency
      * @return array
      */
-    public static function currency_name_description_list(){
+    public function currency_name_description_list(){
         $list = array();
-        $currency = self::currency_list();
+        $currency = $this->currency_list();
         foreach($currency as $key => $value){
             $list[$key] = $key.' - '.$value;
         }
@@ -148,7 +150,7 @@ class Common
      * Returns an array with currency symbols
      * @return array
      */
-    public static function currency_symbols(){
+    public function currency_symbols(){
         $currency_symbols = array(
             'AED' => '&#1583;.&#1573;', // ?
             'AFN' => '&#65;&#102;',
@@ -317,7 +319,7 @@ class Common
      * Get timezone list
      * @return array
      */
-    public static function get_timezone_array(){
+    public function get_timezone_array(){
         $timezoneIdentifiers = \DateTimeZone::listIdentifiers();
         $utcTime = new \DateTime('now', new \DateTimeZone('UTC'));
         $tempTimezones = array();
@@ -352,7 +354,7 @@ class Common
      * Get list with all countries
      * @return array
      */
-    public static function country_list(){
+    public function country_list(){
         $countrylist = array(
             "Afghanistan"=>"Afghanistan",
             "Albania"=>"Albania",
@@ -555,7 +557,7 @@ class Common
      * @param string $posttype
      * @return mixed
      */
-    public static function get_original_post_id($postid,$posttype='post'){
+    public function get_original_post_id($postid,$posttype='post'){
         $original_id = $postid;
         if ( function_exists('icl_object_id') ) {
             global $sitepress;
@@ -564,7 +566,7 @@ class Common
         }
         return $original_id;
     }
-    public static function getExperiensCPT(){
+    public function getExperiensCPT(){
         return [
             "exp_brochure",
             "exp_partner",

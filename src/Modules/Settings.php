@@ -1,17 +1,26 @@
-<?php namespace Experiensa\Plugin\Modules;
+<?php /*namespace Experiensa\Plugin\Modules;
 
 use WP_Query;
 use Experiensa\Plugin\Modules\Helpers;
 use Experiensa\Plugin\Modules\QueryBuilder;
+*/
 /**
  * Define custom setting pages and methods to get setting values
  */
-class Settings
-{
-    public static function addSettingPages(){
-        add_filter('piklist_admin_pages', array( __CLASS__, 'defineDefaultSettingPage' ));
-        add_filter('piklist_admin_pages', array( __CLASS__, 'defineTutorialSettingPage' ));
+class Settings{   
+    protected $qBuilder;
+    protected $helper;
+
+    public function __construct() { 
+        $this->helper = new Helpers();
+        $this->qBuilder = new QueryBuilder();
     }
+    /*
+    public  function addSettingPages(){
+        add_filter('piklist_admin_pages', array( $this, 'defineDefaultSettingPage' ));
+        add_filter('piklist_admin_pages', array( $this, 'defineTutorialSettingPage' ));
+    }
+    */
     /**
     * sub_menu define where to put it in the admin menu (wordpress left sidebar), for more information please visit:
     * https://codex.wordpress.org/Administration_Menus
@@ -30,7 +39,7 @@ class Settings
     * Settings: ‘options-general.php’
     * Network Settings: ‘settings.php’
     **/
-    public static function defineDefaultSettingPage($pages){
+    public function defineDefaultSettingPage($pages){
         $pages[] = array(
             'page_title'    => __('Options','experiensa'),
             'menu_title'    => __('Options', 'experiensa'),
@@ -45,7 +54,7 @@ class Settings
         );
         return $pages;
     }
-    public static function defineTutorialSettingPage($pages){
+    public function defineTutorialSettingPage($pages){
         $pages[] = array(
             'page_title'    => __('Trainning','experiensa'),
             'menu_title'    => __('Trainning', 'experiensa'),
@@ -58,40 +67,40 @@ class Settings
         );
         return $pages;
     }
-    public static function getAllSettings(){
+    public function getAllSettings(){
         return get_option('agency_settings');
     }
-    public static function getCurrency(){
-        $settings = self::getAllSettings();
+    public function getCurrency(){
+        $settings = $this->getAllSettings();
         return (isset($settings['currency'])?$settings['currency']:'CHF');
     }
-    public static function getTimeZone(){
-        $settings = self::getAllSettings();
+    public function getTimeZone(){
+        $settings = $this->getAllSettings();
         return (isset($settings['timezone'])?$settings['timezone']:'America/Caracas');
     }
     /**
      * Get agency email
      * @return mixed
      */
-    public static function getEmail(){
-        $agency_options = self::getAllSettings();
+    public function getEmail(){
+        $agency_options = $this->getAllSettings();
         return $agency_options['agency_email'];
     }
     /**
      * Return the website use: travel agency, hotel or tourism office
      * @return bool
      */
-    public static function getWebsiteUse(){
+    public function getWebsiteUse(){
         $use = false;
-        $agency_options = self::getAllSettings();
+        $agency_options = $this->getAllSettings();
         if(isset($agency_options)) {
             $website_use = (isset($agency_options['website_use']) ? $agency_options['website_use'] : false);
             $use = $website_use;
         }
         return $use;
     }
-    public static function getActivePostTypesByUse(){
-        $agency_options = self::getAllSettings();
+    public function getActivePostTypesByUse(){
+        $agency_options = $this->getAllSettings();
         $post_types = [];
         if(isset($agency_options)) {
             $website_use = (isset($agency_options['website_use'])?$agency_options['website_use']:null);
@@ -111,8 +120,8 @@ class Settings
         }
         return $post_types;
     }
-    public static function getWebsiteLogoID(){
-        $agency_options = self::getAllSettings();
+    public function getWebsiteLogoID(){
+        $agency_options = $this->getAllSettings();
         $agency_logo = (isset($agency_options['agency_logo'])?$agency_options['agency_logo']:[]);
         if(empty($agency_logo))
             return false;
@@ -120,33 +129,33 @@ class Settings
             return false;
         return $agency_logo[0];
     }
-    public static function getWebsiteLogo(){
-        $logo_id = self::getWebsiteLogoID();
-        return Helpers::getAttachmentUrlByID($logo_id);
+    public function getWebsiteLogo(){
+        $logo_id = $this->getWebsiteLogoID();
+        return $this->helper->getAttachmentUrlByID($logo_id);
     }
     /**
      * Get Recaptcha keys added on WP-ADMIN -> Appearance -> Options -> Information
      * @return mixed
      */
-    public static function getRecaptchaData(){
-        $agency_options = self::getAllSettings();
+    public  function getRecaptchaData(){
+        $agency_options = $this->getAllSettings();
         $recaptcha['site_key'] = (isset($agency_options['recaptcha_site_key'])?$agency_options['recaptcha_site_key']:'6Leoqi8UAAAAAKOaMCaqkpSbxTzXpZI_Fpjqqrgx');
         $recaptcha['secret_key'] = (isset($agency_options['recaptcha_secret_key'])?$agency_options['recaptcha_secret_key']:'6Leoqi8UAAAAAB8OHEuUk_9sJJG8G8PrAYQLPJUe');
         return $recaptcha;
     }
-    public static function getGoogleAPIKey(){
-        $agency_options = self::getAllSettings();
+    public function getGoogleAPIKey(){
+        $agency_options = $this->getAllSettings();
         $api_key = (isset($agency_options['google_api_key'])?$agency_options['google_api_key']:'AIzaSyAZ03tMpSTSyRlG-6070zosF5a606k99qI');
         return $api_key;
     }
-    public static function getGoogleMapsAPIKey(){
-        $agency_options = self::getAllSettings();
+    public function getGoogleMapsAPIKey(){
+        $agency_options = $this->getAllSettings();
         $api_key = (isset($agency_options['gmaps_api_key'])?$agency_options['gmaps_api_key']:'AIzaSyAxU6TfM2bDMh6NR9jVksCrNIT6nY8BeNo');
         return $api_key;
     }
 
-    public static function getSocialMedia(){
-        $agency_options = self::getAllSettings();
+    public function getSocialMedia(){
+        $agency_options = $this->getAllSettings();
         $info = array();
         $info['facebook'] = (isset($agency_options['social_facebook'])?$agency_options['social_facebook']:"");
         $info['twitter'] = (isset($agency_options['social_twitter'])?$agency_options['social_twitter']:"");
@@ -157,8 +166,8 @@ class Settings
         $info['pinterest'] = (isset($agency_options['social_pinterest'])?$agency_options['social_pinterest']:"");
         return $info;
     }
-    public static function getAgencyPartners(){
-        $agency_options = self::getAllSettings();
+    public function getAgencyPartners(){
+        $agency_options = $this->getAllSettings();
         $partners = array();
         if(isset($agency_options['agency_partners'])){
             foreach ($agency_options['agency_partners'] as $partner){
@@ -171,41 +180,41 @@ class Settings
         }
         return $partners;
     }
-    public static function getSanitizedSettings(){
+    public  function getSanitizedSettings(){
         $config_data = [];
-        $settings = self::getAllSettings();
-        $config_data['currency'] = self::getCurrency();
-        $config_data['timezone'] = self::getTimeZone();
-        $config_data['use'] = self::getWebsiteUse();
+        $settings = $this->getAllSettings();
+        $config_data['currency'] = $this->getCurrency();
+        $config_data['timezone'] = $this->getTimeZone();
+        $config_data['use'] = $this->getWebsiteUse();
         $config_data['description'] = (isset($settings['description'])?$settings['description']:'');
         $config_data['address'] = (isset($settings['address'])?$settings['address']:'');
         $config_data['postal_code'] = (isset($settings['postal_code'])?$settings['postal_code']:'');
         $config_data['city'] = (isset($settings['city'])?$settings['city']:'');
         $config_data['country'] = (isset($settings['country'])?$settings['country']:'');
-        $config_data['email'] = self::getEmail();
+        $config_data['email'] = $this->getEmail();
         $config_data['phone'] = (isset($settings['phone'])?$settings['phone']:'');
         $config_data['fax'] = (isset($settings['fax'])?$settings['fax']:'');
         $config_data['schedule'] = (isset($settings['schedule'])?$settings['schedule']:'');
         $config_data['google_map'] = (isset($settings['google_map'])?$settings['google_map']:'');
         $config_data['insurance'] = (isset($settings['insurance'])?$settings['insurance']:[]);
-        $config_data['captcha'] = self::getRecaptchaData();        
-        $config_data['logo'] = self::getWebsiteLogo();
-        $config_data['active_post_types'] = self::getActivePostTypesByUse();
+        $config_data['captcha'] = $this->getRecaptchaData();        
+        $config_data['logo'] = $this->getWebsiteLogo();
+        $config_data['active_post_types'] = $this->getActivePostTypesByUse();
         $config_data['website_color'] = (get_theme_mod('website_color')?get_theme_mod('website_color'):'');
         $config_data['catalog_template'] = (get_theme_mod('agency_catalog_template')?get_theme_mod('agency_catalog_template'):'');
         $config_data['catalog_template'] = (!$config_data['catalog_template']?'cards':$config_data['catalog_template']);
-        $config_data['social_media'] = self::getSocialMedia();
-        $config_data['partners'] = self::getAgencyPartners();
-        $config_data['wpml_lang'] = Helpers::getActiveLanguageCode();
-        $config_data['blog_language'] = Helpers::getBlogLanguageSimple();
-        $config_data['cpt'] = QueryBuilder::getPostTypes();
+        $config_data['social_media'] = $this->getSocialMedia();
+        $config_data['partners'] = $this->getAgencyPartners();
+        $config_data['wpml_lang'] = $this->helper->getActiveLanguageCode();
+        $config_data['blog_language'] = $this->helper->getBlogLanguageSimple();
+        $config_data['cpt'] = $this->qBuilder->getPostTypes();
         return $config_data;
     }
-    public static function getUnableDates(){
-        $use = self::getWebsiteUse();
+    public function getUnableDates(){
+        $use = $this->getWebsiteUse();
         $dates = array();
         if($use == 'hotel'){
-            $agency_options = self::getAllSettings();
+            $agency_options = $this->getAllSettings();
             if(isset($agency_options['unable_dates']) && !empty($agency_options['unable_dates'])){
                 $unable_dates = $agency_options['unable_dates'];
                 foreach ($unable_dates as $date){
@@ -224,8 +233,8 @@ class Settings
         }
         return $dates;
     }
-    public static function getLowSeasonDates(){
-        $settings = self::getAllSettings();
+    public  function getLowSeasonDates(){
+        $settings = $this->getAllSettings();
         $low_season['low'] = [];
         if(isset($settings['seasons'])){
             $seasons = $settings['seasons'];
@@ -243,8 +252,8 @@ class Settings
         }
         return $low_season;
     }
-    public static function getHighSeasonDates(){
-        $settings = self::getAllSettings();
+    public  function getHighSeasonDates(){
+        $settings = $this->getAllSettings();
         $high_season['high'] = [];
         if(isset($settings['seasons'])){
             $seasons = $settings['seasons'];
@@ -262,10 +271,10 @@ class Settings
         }
         return $high_season;
     }
-    public static function getSeasonDates(){
+    public  function getSeasonDates(){
         $seasons = [
-            self::getLowSeasonDates(),
-            self::getHighSeasonDates()
+            $this->getLowSeasonDates(),
+            $this->getHighSeasonDates()
         ];
         return $seasons;
     }

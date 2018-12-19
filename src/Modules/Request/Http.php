@@ -1,6 +1,6 @@
-<?php namespace Experiensa\Plugin\Modules\Request;
+<?php //namespace Experiensa\Plugin\Modules\Request;
 
-use Experiensa\Plugin\Modules\Helpers;
+//use Experiensa\Plugin\Modules\Helpers;
 
 /**
  * Class Http
@@ -8,7 +8,11 @@ use Experiensa\Plugin\Modules\Helpers;
  */
 class Http
 {
-    public static function getStandardApiResponse($apiUrl, $local = false){
+    protected $helper;
+    public function __construct( ) {
+        $this->helper = new Helpers();
+    }
+    public function getStandardApiResponse($apiUrl, $local = false){
         $options = array(
             'blocking'    => true,
             'timeout'     => 10,
@@ -35,14 +39,14 @@ class Http
      * @param string $lang_var_name
      * @return string
      */
-    public static function getApiResponse($apiUrl,$check_lang = false, $lang_var_name = 'lang'){
+    public function getApiResponse($apiUrl,$check_lang = false, $lang_var_name = 'lang'){
         if ($check_lang) {
-            $code = Helpers::getActiveLanguageCode();
+            $code = $this->helper->getActiveLanguageCode();
             if ($code) {
                 $apiUrl .= '&' . $lang_var_name . '=' . $code;
             }
         }
-        return self::getStandardApiResponse($apiUrl);
+        return $this->getStandardApiResponse($apiUrl);
     }
 
     /**
@@ -50,14 +54,15 @@ class Http
      * @param $url
      * @return array
      */
-    public static function getUrlHeaders($url){
+    public function getUrlHeaders($url){
         if (function_exists('curl_version')) {
             $curl = curl_init();
             curl_setopt_array( $curl, array(
-                CURLOPT_HEADER => true,
-                CURLOPT_NOBODY => true,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_URL => $url ) );
+                CURLOPT_HEADER          => true,
+                CURLOPT_NOBODY          => true,
+                CURLOPT_RETURNTRANSFER  => true,
+                CURLOPT_URL             => $url 
+            ) );
             $headers = explode( "\n", curl_exec( $curl ) );
             curl_close( $curl );
         }else{
@@ -71,7 +76,7 @@ class Http
      * @param $url
      * @return mixed|null
      */
-    public static function curlRequest($url){
+    public function curlRequest($url){
         $curl = curl_init( $url );
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $curl, CURLOPT_HEADER, 0 );
@@ -90,7 +95,7 @@ class Http
      * @param $url
      * @return bool
      */
-    public static function isPage404($url){
+    public function isPage404($url){
         $is404 = true;
         if(ini_get('allow_url_fopen')) {
             $headers = @get_headers($url);

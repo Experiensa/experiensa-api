@@ -1,6 +1,5 @@
 <?php
-
-
+//TODO OK
 class Helpers{
     public function __construct() {
     }
@@ -38,13 +37,13 @@ class Helpers{
         return get_bloginfo("language");
     }
     public function getBlogLanguageSimple(){
-        $lang = self::getBlogLanguage();
+        $lang = $this->getBlogLanguage();
         $lang = explode("-",$lang,2);
         return $lang[0];
     }
     public function getSiteLanguageCode(){
-        $lang = self::getActiveLanguageCode();
-        $lang = (!$lang?strtolower(self::getBlogLanguageSimple()):strtolower($lang));
+        $lang = $this->getActiveLanguageCode();
+        $lang = (!$lang?strtolower($this->getBlogLanguageSimple()):strtolower($lang));
         return $lang;
     }
     public function  hex2rgb($hex,$array=false) {

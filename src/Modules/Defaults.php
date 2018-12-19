@@ -1,15 +1,25 @@
-<?php namespace Experiensa\Plugin\Modules;
+<?php /*namespace Experiensa\Plugin\Modules;
 
 use Experiensa\Plugin\Modules\Common;
 use Experiensa\Plugin\Modules\Settings;
 use Experiensa\Plugin\Modules\QueryBuilder;
 use Experiensa\Plugin\Modules\Helpers;
+*/
 /**
  * Define defaults actions and filters
  */
 class Defaults
 {
+    protected $common;
+    protected $settings;
+    //protected $qBuilder;
+    //protected $helper;
     public function __construct(){
+        $this->common = new Common();
+        $this->settings = new Settings();
+        //$this->qBuilder = new QueryBuilder();
+        //$this->helper = new Helpers();
+        /*
         add_filter('upload_mimes', array($this,'cc_mime_types'));
         add_filter('body_class', array($this,'add_custom_body_class'));
         add_action('user_register', array($this,'set_default_admin_color_schema'));
@@ -20,6 +30,7 @@ class Defaults
         if ( class_exists( 'Jetpack' ) && \Jetpack::is_module_active( 'tiled-gallery' ) ){
             add_filter( 'tiled_gallery_content_width', array($this,'wpsites_custom_tiled_gallery_width' ));
         }
+        */
     }
     public function sar_custom_curl_timeout($handle){
         \curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 30);
@@ -62,13 +73,13 @@ class Defaults
     public function set_default_admin_color_schema($user_id) {
         if(!WP_DEBUG){
             $args = array(
-                'ID' => $user_id,
-                'admin_color' => 'sunrise'
+                'ID'            => $user_id,
+                'admin_color'   => 'sunrise'
             );
         }else{
             $args = array(
-                'ID' => $user_id,
-                'admin_color' => 'blue'
+                'ID'            => $user_id,
+                'admin_color'   => 'blue'
             );
         }
 
@@ -93,9 +104,9 @@ class Defaults
      * @param $part_data
      * @param $folder
      */
-    public static function hide_hotel_settings_tab($part_data, $folder){
+    public function hide_hotel_settings_tab($part_data, $folder){
         if(isset($part_data['data']['flow']) && $part_data['data']['flow'][0] == 'options' && $part_data['data']['title'] == 'Hotel Settings') {
-            $website_use = Settings::getWebsiteUse();
+            $website_use = $this->settings->getWebsiteUse();
             if ($website_use == 'hotel')
                 return $part_data;
             return;
@@ -110,7 +121,7 @@ class Defaults
         $agency_options = get_option('agency_settings');
         if(isset($agency_options)) {
             $website_use = (isset($agency_options['website_use'])?$agency_options['website_use']:null);
-            $all_posttypes = Common::getExperiensCPT();
+            $all_posttypes = $this->common->getExperiensCPT();
             $to_hide = array();
             if (isset($website_use)) {
                 $posttypes = array();
@@ -128,8 +139,9 @@ class Defaults
                 $to_hide = array_diff($all_posttypes, $posttypes);
             }
             foreach ($to_hide as $value) {
-                if (post_type_exists($value))
+                if (post_type_exists($value)){
                     remove_menu_page('edit.php?post_type=' . $value);
+                }
             }
         }
     }

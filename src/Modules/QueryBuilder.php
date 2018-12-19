@@ -1,14 +1,15 @@
-<?php namespace Experiensa\Plugin\Modules;
+<?php //namespace Experiensa\Plugin\Modules;
 
-use WP_Query;
-
-class QueryBuilder
-{
+//use WP_Query;
+//TODO: OK
+class QueryBuilder{
+    public function __construct() {
+    }
     /**
      * Create an Array with all post types registered. Structure: ['<post type id>'] => 'post type name'
      * @return array
      */
-    public static function getPostTypes(){
+    public function getPostTypes(){
         $cpt_list = get_post_types(array('public' => true));
         $post_types = array();
         foreach ($cpt_list as $cpt){
@@ -27,7 +28,7 @@ class QueryBuilder
      * @param $cpt_name
      * @return mixed
      */
-    public static function checkPostTypeExist($cpt_name){
+    public function checkPostTypeExist($cpt_name){
         return post_type_exists($cpt_name);
     }
 
@@ -38,7 +39,7 @@ class QueryBuilder
      * @param bool $single
      * @return bool
      */
-    public static function checkMetaFieldExist($id,$key,$single=true){
+    public function checkMetaFieldExist($id,$key,$single=true){
         $meta = get_post_meta($id,$key,$single);
         if($single){
             return ($meta != '');
@@ -51,7 +52,7 @@ class QueryBuilder
      * @param string $output
      * @return array
      */
-    public static function getTaxonomies($args=[],$output='names'){
+    public function getTaxonomies($args=[],$output='names'){
         $taxonomies_list = get_taxonomies($args,$output);
         $taxonomies = array();
         foreach ($taxonomies_list as $taxonomy){
@@ -68,7 +69,7 @@ class QueryBuilder
      * @param array $terms
      * @return array
      */
-    public static function getTermsByTaxonomy($taxonomy,$terms = array(), $hide_empty = true){
+    public function getTermsByTaxonomy($taxonomy,$terms = array(), $hide_empty = true){
         if(!empty($terms)){
             $args = array(
                 'taxonomy'   => $taxonomy,
@@ -93,11 +94,11 @@ class QueryBuilder
      * @param string $order_by
      * @return mixed
      */
-    public static function getPosts($limit = 4, $order = 'ASC', $order_by = 'title'){
+    public function getPosts($limit = 4, $order = 'ASC', $order_by = 'title'){
         $args = array(
-            'numberposts' => $limit,
-            'order'=> $order,
-            'orderby' => $order_by
+            'numberposts'   => $limit,
+            'order'         => $order,
+            'orderby'       => $order_by
         );
         $posts = get_posts($args);
         return $posts;
@@ -110,13 +111,13 @@ class QueryBuilder
      * @param int $limit
      * @return WP_Query
      */
-    public static function getPostByArguments($post_type,$taxonomy,$terms = [],$limit=-1){
+    public function getPostByArguments($post_type,$taxonomy,$terms = [],$limit=-1){
         if(empty($terms)) {
-            $terms = self::getTermsByTaxonomy($taxonomy);
+            $terms = $this->getTermsByTaxonomy($taxonomy);
         }else {
-            $terms = self::getTermsByTaxonomy($taxonomy, $terms);
+            $terms = $this->getTermsByTaxonomy($taxonomy, $terms);
             if(empty($terms)) {
-                $terms = self::getTermsByTaxonomy($taxonomy);
+                $terms = $this->getTermsByTaxonomy($taxonomy);
             }
         }
 
@@ -136,7 +137,7 @@ class QueryBuilder
         return $query;
     }
 
-    public static function getPostByPostType($post_type = 'exp_voyage',$limit = -1,$order = 'DESC'){
+    public function getPostByPostType($post_type = 'exp_voyage',$limit = -1,$order = 'DESC'){
         $pt = (is_array($post_type)?$post_type:array($post_type));
         $args = [
             'posts_per_page' => $limit,
@@ -154,18 +155,18 @@ class QueryBuilder
      * @param string $order
      * @return mixed
      */
-    public static function getPostByPostTypeAndCategoryName($post_type,$category,$order = 'DESC'){
+    public function getPostByPostTypeAndCategoryName($post_type,$category,$order = 'DESC'){
         $args = array(
-            'post_type' => $post_type,
+            'post_type'     => $post_type,
             'category_name' => $category,
-            'order' => $order,
+            'order'         => $order,
         );
         $posts = get_posts($args);
         return $posts;
     }
-    public static function getPostByPostTypeTaxonomyAndTerm($post_type,$taxonomy,$terms = [],$limit = -1){
+    public function getPostByPostTypeTaxonomyAndTerm($post_type,$taxonomy,$terms = [],$limit = -1){
         if($taxonomy=='all'){
-            return self::getPostByPostType($post_type,$limit);
+            return $this->getPostByPostType($post_type,$limit);
         }else {
             $args = array(
                 'post_type'      => $post_type,
@@ -184,5 +185,4 @@ class QueryBuilder
             return $query;
         }
     }
-
 }

@@ -6,6 +6,7 @@ function experiensa_autoloader($class){
     $base_dir = __DIR__ . '/src/';
     $directories = array();
     $directories[] = $base_dir;
+    $directories[] = $base_dir.'Includes/';
     $directories[] = $base_dir.'Models/';
     $directories[] = $base_dir.'Models/PostType/';
     $directories[] = $base_dir.'Models/Taxonomy/';
