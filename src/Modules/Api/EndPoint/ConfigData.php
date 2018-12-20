@@ -1,13 +1,15 @@
-<?php namespace Experiensa\Plugin\Modules\Api\EndPoint;
+<?php //namespace Experiensa\Plugin\Modules\Api\EndPoint;
 
-use Experiensa\Plugin\Modules\Settings;
+//use Experiensa\Plugin\Modules\Settings;
 
 class ConfigData{
     protected $version;
     protected $namespace;
     protected $name;
+    protected $setting;
 
     public function __construct( ) {
+        $this->setting = new Settings();
         $this->version = '2';
         $this->namespace = 'wp/v' . $this->version;
         $this->name = 'configdata';
@@ -23,7 +25,7 @@ class ConfigData{
         ));
     }
     public function response_config_data(){
-        $response = Settings::getSanitizedSettings();
+        $response = $this->setting->getSanitizedSettings();
         return new \WP_REST_Response( $response, 200 );
     }
 }

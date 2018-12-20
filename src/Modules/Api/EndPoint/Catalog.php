@@ -1,6 +1,6 @@
-<?php namespace Experiensa\Plugin\Modules\Api\EndPoint;
+<?php //namespace Experiensa\Plugin\Modules\Api\EndPoint;
 
-use Experiensa\Plugin\Modules\Request\Catalog as CatalogRequest;
+//use Experiensa\Plugin\Modules\Request\Catalog as CatalogRequest;
 
 class Catalog {
     protected $version;
@@ -9,8 +9,10 @@ class Catalog {
     protected $catalog;
     protected $location_filter;
     protected $theme_filter;
+    protected $catalog_request;
 
-    public function __construct( ) {
+    public function __construct() {
+        $this->catalog_request = new CatalogRequest();
         $this->version = '2';
         $this->namespace = 'wp/v' . $this->version;
         $this->name = 'catalog';
@@ -75,7 +77,7 @@ class Catalog {
         ));
     }
     public function set_catalog() {
-        $catalog = CatalogRequest::getCatalog();
+        $catalog = $this->catalog_request->getCatalog();
         $this->catalog = $catalog;
     }
     public function getCatalog($new){

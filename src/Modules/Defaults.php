@@ -1,5 +1,5 @@
 <?php /*namespace Experiensa\Plugin\Modules;
-
+//FIXME: REVISAR USO OK
 use Experiensa\Plugin\Modules\Common;
 use Experiensa\Plugin\Modules\Settings;
 use Experiensa\Plugin\Modules\QueryBuilder;

@@ -1,5 +1,5 @@
 <?php
-//TODO OK
+//FIXME: OK
 class Helpers{
     public function __construct() {
     }

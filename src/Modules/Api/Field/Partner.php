@@ -1,4 +1,4 @@
-<?php namespace Experiensa\Plugin\Modules\Api\Field;
+<?php //namespace Experiensa\Plugin\Modules\Api\Field;
 
 
 class Partner

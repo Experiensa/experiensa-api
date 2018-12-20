@@ -1,10 +1,12 @@
-<?php namespace Experiensa\Plugin\Modules\Api\Field;
+<?php //namespace Experiensa\Plugin\Modules\Api\Field;
 
-use Experiensa\Plugin\Modules\Request\Media;
+//use Experiensa\Plugin\Modules\Request\Media;
 
 class Voyages{
     public $ctp;
+    protected $media;
     public function __construct(){
+        $this->media = new MediaRequest();
         $this->cpt = 'exp_voyage';
         $this->registerFields();
     }
@@ -213,7 +215,7 @@ class Voyages{
                     $row['term'] = $term->name;
                     $location[] = $row;
                 }
-                $response = Media::get_media_request_api('media',$location);
+                $response = $this->media->get_media_request_api('media',$location);
                 if(!empty($response)){
                     foreach($response as $image){
                         if(strpos($image['full_size'],'http')===0){

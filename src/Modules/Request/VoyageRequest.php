@@ -1,34 +1,40 @@
-<?php namespace Experiensa\Plugin\Modules\Request;
+<?php //namespace Experiensa\Plugin\Modules\Request;
 
-use Experiensa\Plugin\Modules\Request\Partner;
-use Experiensa\Plugin\Modules\Request\Http;
+//use Experiensa\Plugin\Modules\Request\Partner;
+//use Experiensa\Plugin\Modules\Request\Http;
 
-class Voyage
+class VoyageRequest
 {
-    public static function getVoyages($decode = false){
+    protected $partner;
+    protected $http;
+    public function __construct(){
+        $this->http = new Http();
+        $this->partner = new Partner();
+    }
+    public function getVoyages($decode = false){
         $partner_api_url = EXPERIENSA_MAIN_API_URL.'/exp_voyage?per_page=100';
 //        return $partner_api_url;
-        $response = Http::getApiResponse($partner_api_url,true);
+        $response = $this->http->getApiResponse($partner_api_url,true);
 //        return $response;
         if($decode && \is_string($response))
             return json_decode($response,true);
         return $response;
     }
-    public static function getPartnersVoyages(){
-        $partners = Partner::getPartnersApi();
+    public function getPartnersVoyages(){
+        $partners = $this->partner->getPartnersApi();
         $voyages = [];
         foreach ($partners as $info){
             $partner_url = $info['url'] . 'wp-json/wp/v2/exp_voyage?per_page=100';
-            $partner_response = Http::getApiResponse($partner_url,true);
+            $partner_response = $this->http->getApiResponse($partner_url,true);
             if(!isset($partner_response['error'])) {
                 $partner_response = json_decode($partner_response, true);
-                $partner_response = self::createApiResponse($partner_response);
+                $partner_response = $this->createApiResponse($partner_response);
                 $voyages = array_merge($voyages, $partner_response);
             }
         }
         return $voyages;
     }
-    public static function createApiResponse($voyages){
+    public function createApiResponse($voyages){
         $response = [];
         if(!empty($voyages) && !isset($voyages['error'])){
             $i = 0;
@@ -61,7 +67,7 @@ class Voyage
         }
         return $response;
     }
-    public static function createUniqueApiResponse($voyages){
+    public function createUniqueApiResponse($voyages){
         if(!empty($voyages)){
             for($i = 0; $i < count($voyages); $i++){
                 $voyages[$i]['index'] = $i;
