@@ -6,7 +6,7 @@
  * Class Http
  * @package Experiensa\Plugin\Modules\Request
  */
-class Http
+class HttpRequest
 {
     protected $helper;
     public function __construct( ) {

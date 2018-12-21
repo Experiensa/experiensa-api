@@ -5,7 +5,7 @@ class PartnerRequest
 {
     protected $http;
     public function __construct(){
-        $this->http = new Http();
+        $this->http = new HttpRequest();
     }
     public function getPartners(){
         $partner_api_url = EXPERIENSA_MAIN_API_URL.'/exp_partner';

@@ -8,7 +8,7 @@ class VoyageRequest
     protected $partner;
     protected $http;
     public function __construct(){
-        $this->http = new Http();
+        $this->http = new HttpRequest();
         $this->partner = new Partner();
     }
     public function getVoyages($decode = false){

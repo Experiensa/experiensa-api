@@ -4,7 +4,7 @@
 class MediaRequest{
     protected $http;
     public function __construct( ) {
-        $this->http = new Http();
+        $this->http = new HttpRequest();
     }
     public function get_media_api_list($website='http://guanaima.ch',$posttype, $terms=null,$order=null){
         $list = array();

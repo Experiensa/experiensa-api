@@ -12,7 +12,7 @@ class Ajax{
 	protected $setting;
 	
   	public function __construct( ) {
-		$this->http = new Http();
+		$this->http = new HttpRequest();
 		$this->helper = new Helpers();
         $this->setting = new Settings();
 		/*
